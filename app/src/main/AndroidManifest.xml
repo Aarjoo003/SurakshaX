@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.aarjoo.surakshax">
+
+    <!-- Permissions -->
+
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
+
+    <application
+        android:allowBackup="true"
+        android:label="SurakshaX"
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+
+        <activity
+            android:name=".Splash"
+            android:exported="true">
+
+            <intent-filter>
+
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+
+            </intent-filter>
+
+        </activity>
+
+        <activity android:name=".MainActivity" />
+        <activity android:name=".Register_Activity" />
+        <activity android:name=".Dashboard" />
+
+        <activity
+            android:name=".Profile"
+            android:parentActivityName=".Dashboard" />
+
+        <activity
+            android:name=".Contacts"
+            android:parentActivityName=".Profile" />
+
+        <activity
+            android:name=".Permission"
+            android:parentActivityName=".Dashboard" />
+
+        <activity
+            android:name=".Alerts"
+            android:parentActivityName=".Dashboard" />
+
+        <activity
+            android:name=".Happy_Screen"
+            android:parentActivityName=".Dashboard" />
+
+    </application>
+
+</manifest>
