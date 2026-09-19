@@ -24,7 +24,7 @@ Traditional safety apps require the victim to manually unlock their phone, open 
 ## 🚀 Key Features
 
 * **Multi-Modal AI Inference:** Combines 3 independent detection modules (Scream, Fall, and Stress) into a unified **Hierarchical Decision Tree (HDT)**.
-* **Ultra-Low Latency REST API:** Local Flask inference server processing multi-sensor telemetry in **under 10 milliseconds**.
+* **Ultra-Low Latency Cloud REST API:** 24/7 cloud-hosted Flask inference engine on Render delivering sub-100ms real-time ML decisions.
 * **10-Second Fail-Safe Countdown:** Avoids false alarms by providing a 10-second interactive cancellation window before emergency dispatch.
 * **Autonomous Emergency Dispatch:** Automatically queries high-accuracy GPS coordinates (`FusedLocationProviderClient`) and fires carrier SMS alerts containing clickable Google Maps links (`https://www.google.com/maps?q=lat,lon`).
 * **Firebase Cloud Integration:**
@@ -135,39 +135,47 @@ SurakshaX/
 
 ---
 
-### 2. Backend Setup (Flask Server)
+### 2. Cloud Backend API (Render)
 
-* **Live Cloud Deployment (Render):**  
-  The AI inference backend is deployed 24/7 in the cloud at:  
-  👉 **`https://surakshax-wa0i.onrender.com`**  
-  * Health Check: `GET https://surakshax-wa0i.onrender.com/`  
-  * Inference Endpoint: `POST https://surakshax-wa0i.onrender.com/analyze_status`
+The AI inference backend is deployed 24/7 in the cloud at:  
+👉 **`https://surakshax-wa0i.onrender.com`**  
 
-* **Running Locally (Optional):**
-1. Open your terminal and navigate to the `backend` folder:
-   ```bash
-   cd backend
-   ```
-2. Install the required Python libraries:
-   ```bash
-   pip install -r requirements.txt
-   ```
-3. Start the Flask server:
-   ```bash
-   python app.py
-   ```
-   *The server will start on port `5000`:*
-   ```text
-   ============================================================
-    SurakshaX Local AI Inference Server Running on Port 5000
-    - Android Emulator URL: http://10.0.2.2:5000/analyze_status
-    - Localhost URL:        http://127.0.0.1:5000/analyze_status
-   ============================================================
-   ```
-4. *(Optional)* In a separate terminal, verify the endpoints:
-   ```bash
-   python test_api.py
-   ```
+* **Health Check:**
+  ```http
+  GET https://surakshax-wa0i.onrender.com/
+  ```
+  **Sample Response:**
+  ```json
+  {
+    "service": "SurakshaX AI Inference Engine",
+    "status": "online",
+    "version": "1.0"
+  }
+  ```
+
+* **Live Inference Endpoint:**
+  ```http
+  POST https://surakshax-wa0i.onrender.com/analyze_status
+  Content-Type: application/json
+  ```
+  **Payload Schema:**
+  ```json
+  {
+    "audio_score": 0.85,
+    "fall_force": 4.5,
+    "heart_rate": 135,
+    "latitude": 22.7196,
+    "longitude": 75.8577
+  }
+  ```
+  **Inference Response:**
+  ```json
+  {
+    "decision": "CRITICAL",
+    "reason": "Acoustic distress / scream detected",
+    "timestamp": "2026-09-19T18:28:57.867168"
+  }
+  ```
 
 ---
 
@@ -175,16 +183,11 @@ SurakshaX/
 
 1. Open **Android Studio** $\rightarrow$ Click **File > Open** $\rightarrow$ Select the `SurakshaX` folder.
 2. Allow Gradle to sync dependencies.
-3. **Configure Network Endpoint in [`Dashboard.java`](app/src/main/java/com/aarjoo/surakshax/Dashboard.java):**
-   * **If testing on Android Studio Emulator:**
-     ```java
-     private final String FLASK_URL = "http://10.0.2.2:5000/analyze_status";
-     ```
-   * **If testing on a Real Physical Phone (connected to same Wi-Fi):**
-     ```java
-     private final String FLASK_URL = "http://<YOUR_LAPTOP_IP>:5000/analyze_status";
-     ```
-4. Click the green **Run ▶️** button in Android Studio to launch on your device or emulator.
+3. The mobile application is already pre-configured to communicate with the live cloud backend in [`Dashboard.java`](app/src/main/java/com/aarjoo/surakshax/Dashboard.java):
+   ```java
+   private final String FLASK_URL = "https://surakshax-wa0i.onrender.com/analyze_status";
+   ```
+4. Connect your Android phone (or launch the emulator) and click the green **Run ▶️** button in Android Studio.
 
 ---
 
