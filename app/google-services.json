@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "657561994701",
+    "project_id": "surakshax-cfe3b",
+    "storage_bucket": "surakshax-cfe3b.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:657561994701:android:0d2c9a5f69d3d11e11f084",
+        "android_client_info": {
+          "package_name": "com.surakshax.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCXtI3Zl4U5t1FMJv_4oRhMMTxRLK606SA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

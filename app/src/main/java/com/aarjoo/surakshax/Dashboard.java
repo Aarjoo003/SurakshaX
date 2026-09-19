@@ -35,8 +35,10 @@ public class Dashboard extends AppCompatActivity {
     private double latitude = 0.0;
     private double longitude = 0.0;
 
-    private final String RENDER_URL =
-            "https://backend-suraksha-x.onrender.com/analyze_status";
+    // Local Flask REST API URL:
+    // Configured for real phone on Wi-Fi (Laptop IP: 10.220.117.184):
+    private final String FLASK_URL =
+            "http://10.220.117.184:5000/analyze_status";
 
     private FusedLocationProviderClient fusedLocationClient;
 
@@ -328,7 +330,7 @@ public class Dashboard extends AppCompatActivity {
         JsonObjectRequest request =
                 new JsonObjectRequest(
                         Request.Method.POST,
-                        RENDER_URL,
+                        FLASK_URL,
                         jsonBody,
 
                         response -> {
@@ -340,7 +342,7 @@ public class Dashboard extends AppCompatActivity {
 
                                 Toast.makeText(
                                         this,
-                                        "Backend Connected Successfully!",
+                                        "Flask Backend Connected!",
                                         Toast.LENGTH_SHORT
                                 ).show();
 
@@ -378,7 +380,7 @@ public class Dashboard extends AppCompatActivity {
 
                                     Toast.makeText(
                                             this,
-                                            "User Safe",
+                                            "User Safe (Normal Activity)",
                                             Toast.LENGTH_LONG
                                     ).show();
                                 }
@@ -399,8 +401,7 @@ public class Dashboard extends AppCompatActivity {
 
                             Toast.makeText(
                                     this,
-                                    "API Error: " +
-                                            error.toString(),
+                                    "Connection Failed! Make sure Flask ('python app.py') is running.",
                                     Toast.LENGTH_LONG
                             ).show();
                         }

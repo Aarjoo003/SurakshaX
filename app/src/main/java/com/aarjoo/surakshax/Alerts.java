@@ -2,6 +2,7 @@ package com.aarjoo.surakshax;
 
 import android.Manifest;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.telephony.SmsManager;
@@ -12,6 +13,13 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class Alerts extends AppCompatActivity {
 
@@ -114,7 +122,9 @@ public class Alerts extends AppCompatActivity {
                 "https://www.google.com/maps?q="
                         + lat + "," + lon;
 
-        String emergencyContact = "98260XXXXX";
+        SharedPreferences prefs = getSharedPreferences(Contacts.PREFS_NAME, MODE_PRIVATE);
+        String emergencyContact1 = prefs.getString(Contacts.KEY_GUARDIAN_PHONE, "9302414220");
+        String emergencyContact2 = prefs.getString(Contacts.KEY_GUARDIAN_PHONE_2, "");
 
         String message =
                 "EMERGENCY! SurakshaX detected danger. "
@@ -126,19 +136,51 @@ public class Alerts extends AppCompatActivity {
             SmsManager smsManager =
                     SmsManager.getDefault();
 
-            smsManager.sendTextMessage(
-                    emergencyContact,
-                    null,
-                    message,
-                    null,
-                    null
-            );
+            // Send to Primary Guardian
+            if (!emergencyContact1.isEmpty()) {
+                smsManager.sendTextMessage(
+                        emergencyContact1,
+                        null,
+                        message,
+                        null,
+                        null
+                );
+            }
+
+            // Send to Secondary Guardian if set
+            if (!emergencyContact2.isEmpty()) {
+                smsManager.sendTextMessage(
+                        emergencyContact2,
+                        null,
+                        message,
+                        null,
+                        null
+                );
+            }
 
             Toast.makeText(
                     this,
-                    "SOS Sent with Live GPS Location!",
+                    "SOS Sent to Guardians with Live GPS Location!",
                     Toast.LENGTH_LONG
             ).show();
+
+            // Cloud Logging to Firebase Firestore
+            try {
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                Map<String, Object> alertLog = new HashMap<>();
+                alertLog.put("userId", user != null ? user.getUid() : "anonymous_device");
+                alertLog.put("latitude", lat);
+                alertLog.put("longitude", lon);
+                alertLog.put("maps_link", mapsLink);
+                alertLog.put("status", "CRITICAL_ALERT");
+                alertLog.put("timestamp", System.currentTimeMillis());
+
+                FirebaseFirestore.getInstance()
+                        .collection("emergency_alerts")
+                        .add(alertLog);
+            } catch (Exception firestoreEx) {
+                // Offline fallback - safe to ignore
+            }
 
         } catch (Exception e) {
 
