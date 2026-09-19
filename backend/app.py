@@ -91,10 +91,9 @@ def analyze_status():
         }), 400
 
 if __name__ == "__main__":
-    # host='0.0.0.0' allows external devices on the same Wi-Fi (like your real phone) to connect
+    import os
+    port = int(os.environ.get("PORT", 5000))
     print("=" * 60)
-    print(" SurakshaX Local AI Inference Server Running on Port 5000")
-    print(" - Android Emulator URL: http://10.0.2.2:5000/analyze_status")
-    print(" - Localhost URL:        http://127.0.0.1:5000/analyze_status")
+    print(f" SurakshaX AI Inference Server Running on Port {port}")
     print("=" * 60)
-    app.run(host="0.0.0.0", port=5000, debug=True)
+    app.run(host="0.0.0.0", port=port, debug=False)
