@@ -6,11 +6,6 @@
 [![ML](https://img.shields.io/badge/ML%20Framework-scikit--learn-yellow.svg?logo=scikitlearn)](https://scikit-learn.org/)
 [![License](https://img.shields.io/badge/License-MIT-lightgrey.svg)](LICENSE)
 
-> **Academic Project**  
-> **Department of Information Technology**, Shri Govindram Seksaria Institute of Technology & Science (**SGSITS**), Indore (M.P.)  
-> **Supervised by:** Mrs. Megha Kuliha (Assistant Professor, IT Dept)  
-> **Developed by:** Aarjoo Dahiya, Jot Ajmani, Ishita Agrawal  
-
 ---
 
 ## 📌 Overview
@@ -233,8 +228,3 @@ Test the system using benchmark dataset values directly on the Dashboard:
 
 ---
 
-## 📜 Academic Attribution & License
-
-This project was developed in partial fulfillment of the requirements for the degree of Bachelor of Technology in Information Technology at **SGSITS Indore**, affiliated with Rajiv Gandhi Proudyogiki Vishwavidyalaya (RGPV), Bhopal.
-
-Distributed under the MIT License. See `LICENSE` for details.
