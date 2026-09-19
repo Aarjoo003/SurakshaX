@@ -137,6 +137,13 @@ SurakshaX/
 
 ### 2. Backend Setup (Flask Server)
 
+* **Live Cloud Deployment (Render):**  
+  The AI inference backend is deployed 24/7 in the cloud at:  
+  👉 **`https://surakshax-wa0i.onrender.com`**  
+  * Health Check: `GET https://surakshax-wa0i.onrender.com/`  
+  * Inference Endpoint: `POST https://surakshax-wa0i.onrender.com/analyze_status`
+
+* **Running Locally (Optional):**
 1. Open your terminal and navigate to the `backend` folder:
    ```bash
    cd backend

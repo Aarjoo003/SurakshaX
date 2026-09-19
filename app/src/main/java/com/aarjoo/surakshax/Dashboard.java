@@ -35,10 +35,9 @@ public class Dashboard extends AppCompatActivity {
     private double latitude = 0.0;
     private double longitude = 0.0;
 
-    // Local Flask REST API URL:
-    // Configured for real phone on Wi-Fi (Laptop IP: 10.220.117.184):
+    // Live Cloud AI Inference Backend (Render):
     private final String FLASK_URL =
-            "http://10.220.117.184:5000/analyze_status";
+            "https://surakshax-wa0i.onrender.com/analyze_status";
 
     private FusedLocationProviderClient fusedLocationClient;
 
